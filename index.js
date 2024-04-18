@@ -1,4 +1,4 @@
-//Imports
+//Import
 const express = require('express');
 const app = express();
 const PORT = 3000;
@@ -7,29 +7,38 @@ const upload = multer({ dest: 'uploads/' });
 const Jimp = require('jimp');
 const { v4: uuidv4 } = require('uuid');
 
-//Middleware
+//Config
 app.use(express.static('public'));
 app.use('/processed', express.static('processed'));
 
-//Inicia el server
+//Server
 app.listen(PORT, () => console.log(`Servidor corriendo en puerto ${PORT}`));
 
-//Pag inicio
+//Ruta raíz
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html');
 });
 
-//Ruta para img POST
+//Ruta de carga
 app.post('/cargar', upload.single('imageFile'), async (req, res) => {
     try {
+        if (!req.file && !req.body.imageUrl) {
+            throw new Error('No se proporcionó una imagen');
+        }
+//Obtiene la ruta de la imagen
         const path = req.file ? req.file.path : req.body.imageUrl;
+        
+//JIMP
         const image = await Jimp.read(path);
         const processedImage = await image
-            .greyscale()
+            .greyscale() 
             .resize(350, Jimp.AUTO);
 
+//UUID4
         const outputPath = `processed/${uuidv4()}.jpeg`;
         await processedImage.writeAsync(outputPath);
+        
+//HTML
         res.send(`<!DOCTYPE html>
         <html lang="en">
         <head>
@@ -41,12 +50,11 @@ app.post('/cargar', upload.single('imageFile'), async (req, res) => {
         <body>
         <img src="${outputPath}" class="fullscreen-image">
         <br>
-        <button onclick="window.history.back();" class="back-button">Volver</button>
+        <a href="/" class="back-button">Volver</a>
         </body>
         </html>`);
-//Errors
     } catch (error) {
         console.error(error);
-        res.status(500).send('Error al procesar la imagen');
+        res.status(500).send('Error: pude que la imagen no exista o hubo un problema al cargarla. Revisa el link.');
     }
 });

@@ -12,11 +12,30 @@
     </div>
     <div class="form-container">
         <form action="/cargar" method="post" enctype="multipart/form-data">
-            <input type="text" name="imageUrl" placeholder="URL de la imagen o ruta local">
+            <input type="text" name="imageUrl" placeholder="URL de la imagen o ruta local" >
             <input type="file" name="imageFile"  accept="image/png, image/jpeg">
             <br>
             <button type="submit">Subir la imagen al servidor</button>
+            <div id="error-message" style="color: red; margin-top: 10px;"></div>
         </form>
     </div>
 </body>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('form');
+        const errorMessageDiv = document.getElementById('error-message');
+
+        form.addEventListener('submit', function(event) {
+            const imageUrl = document.querySelector('input[name="imageUrl"]').value;
+            const imageFile = document.querySelector('input[name="imageFile"]').files.length;
+
+            if (!imageUrl && imageFile === 0) {
+                event.preventDefault();
+                errorMessageDiv.textContent = 'Debes proporcionar una URL de imagen o seleccionar un archivo.';
+            } else {
+                errorMessageDiv.textContent = ''; // Limpiar el mensaje de error si todo está bien
+            }
+        });
+    });
+</script>
 </html>
