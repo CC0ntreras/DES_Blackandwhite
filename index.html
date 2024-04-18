@@ -12,8 +12,8 @@
     </div>
     <div class="form-container">
         <form action="/cargar" method="post" enctype="multipart/form-data">
-            <input type="text" name="imageUrl" placeholder="URL de la imagen o ruta local" required>
-           
+            <input type="text" name="imageUrl" placeholder="URL de la imagen o ruta local">
+            <input type="file" name="imageFile"  accept="image/png, image/jpeg">
             <br>
             <button type="submit">Subir la imagen al servidor</button>
         </form>

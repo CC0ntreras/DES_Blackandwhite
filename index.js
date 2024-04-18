@@ -1,3 +1,4 @@
+//Imports
 const express = require('express');
 const app = express();
 const PORT = 3000;
@@ -6,15 +7,19 @@ const upload = multer({ dest: 'uploads/' });
 const Jimp = require('jimp');
 const { v4: uuidv4 } = require('uuid');
 
+//Middleware
 app.use(express.static('public'));
 app.use('/processed', express.static('processed'));
 
+//Inicia el server
 app.listen(PORT, () => console.log(`Servidor corriendo en puerto ${PORT}`));
 
+//Pag inicio
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html');
 });
 
+//Ruta para img POST
 app.post('/cargar', upload.single('imageFile'), async (req, res) => {
     try {
         const path = req.file ? req.file.path : req.body.imageUrl;
@@ -39,6 +44,7 @@ app.post('/cargar', upload.single('imageFile'), async (req, res) => {
         <button onclick="window.history.back();" class="back-button">Volver</button>
         </body>
         </html>`);
+//Errors
     } catch (error) {
         console.error(error);
         res.status(500).send('Error al procesar la imagen');
