@@ -1,0 +1,63 @@
+/* Archivo: public/style.css */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: black;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+.header {
+    text-align: center;
+    padding: 20px;
+}
+
+.form-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+input[type="text"], input[type="file"] {
+    margin: 10px 0;
+    padding: 10px;
+    width: 80%;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #fff;
+    color: #000;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #ccc;
+}
+
+.fullscreen-image {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 50vw; 
+    height: 50vh; 
+    object-fit: contain; 
+    transform: translate(-50%, -50%); 
+}
+.back-button {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background-color: #333;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.back-button:hover {
+    background-color: #555;
+}
